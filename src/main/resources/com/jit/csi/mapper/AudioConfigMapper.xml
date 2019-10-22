@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jit.csi.mapper.AudioConfigMapper">
+    <resultMap id="baseMap" type="audioConfig">
+        <id property="userID" column="userID"/>
+        <result property="auSetVol" column="auSetVol"/>
+        <result property="auSetVoiPer" column="auSetVoiPer"/>
+        <result property="auSetSpd" column="auSetSpd"/>
+        <result property="auSetPit" column="auSetPit"/>
+    </resultMap>
+
+    <select id="findAudioConfigByUserID" parameterType="integer" resultMap="baseMap">
+        select * from audio_config where userID=#{uid};
+    </select>
+
+    <update id="updateAudioConfigByUserID" parameterType="audioConfig">
+        update audio_config
+        <set>
+            <if test="auSetVol !=null">
+                auSetVol = #{auSetVol},
+            </if>
+            <if test="auSetVoiPer !=null">
+                auSetVoiPer = #{auSetVoiPer},
+            </if>
+            <if test="auSetSpd !=null">
+                auSetSpd = #{auSetSpd},
+            </if>
+            <if test="auSetPit !=null">
+                auSetPit = #{auSetPit},
+            </if>
+        </set>
+        where userID=#{userID};
+    </update>
+</mapper>

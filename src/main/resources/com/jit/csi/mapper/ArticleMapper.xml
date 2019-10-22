@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jit.csi.mapper.ArticleMapper">
+    <resultMap id="baseMap" type="article">
+        <id property="articleID" column="articleID"/>
+        <result property="postTitle" column="postTitle"/>
+        <result property="postText" column="postText"/>
+        <result property="postPageviews" column="postPageviews"/>
+        <result property="postAudio" column="postAudio"/>
+        <result property="postTime" column="postTime"/>
+    </resultMap>
+
+    <select id="findAllArticles" resultMap="baseMap">
+        select * from user;
+    </select>
+
+    <select id="findArticleByTitle" parameterType="string" resultMap="baseMap">
+        select * from user where articleID=#{title};
+    </select>
+
+    <update id="updateArticleByTitle" parameterType="article">
+        update article
+        <set>
+            <if test="postPageviews != null">
+                postPageviews = #{postPageviews},
+            </if>
+            <if test="postAudio != null">
+                postAudio = #{postAudio},
+            </if>
+            <if test="postTime != null">
+                postTime = #{postTime},
+            </if>
+            <if test="postText != null">
+                postText = #{postText},
+            </if>
+        </set>
+        where articleID = #{articleID}
+        and postTitle = #{postTitle}
+    </update>
+
+    <delete id="delteArticleByTitle" parameterType="string">
+        delete from article
+        where postTitle = #{postTitle}
+    </delete>
+
+    <insert id="insertArticle" parameterType="article">
+        insert into article ( postTitle, postAudio, postText )
+        values ( #{postTitle}, #{postAudio}, #{postText} )
+    </insert>
+
+
+
+</mapper>

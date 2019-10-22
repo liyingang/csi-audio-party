@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jit.csi.mapper.CommentsMapper">
+    <resultMap id="baseMap" type="comments">
+        <id property="commentID" column="commentID"/>
+        <result property="articleID" column="articleID"/>
+        <result property="cmText" column="cmText"/>
+        <result property="cmAudio" column="cmAudio"/>
+        <result property="cmTime" column="cmTime"/>
+        <result property="zan" column="zan"/>
+    </resultMap>
+
+    <insert id="insertComment" parameterType="comments" >
+        insert into comments ( articleID, cmAudio, cmText )
+        values ( #{articleID}, #{cmAudio}, #{cmText} )
+    </insert>
+
+    <select id="findPopularCommentByZan" resultMap="baseMap">
+        SELECT * FROM comments group by zan desc limit 5;
+    </select>
+    <select id="findAllCommentByTime" resultMap="baseMap">
+        SELECT * FROM comments group by cmTime desc;
+    </select>
+    <delete id="deleteCommentByID" parameterType="integer">
+        delete from comments where commentID=#{id};
+    </delete>
+    <update id="updateCommentByID" parameterType="comments">
+        update comments
+        <set>
+            <if test="cmText !=null">
+                cmText=#{cmText},
+            </if>
+            <if test="cmAudio !=null">
+                cmAudio=#{cmAudio},
+            </if>
+            <if test="cmTime !=null">
+                cmTime=#{cmTime},
+            </if>
+        </set>
+        where commentID=#{commentID}
+    </update>
+</mapper>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jit.csi.mapper.UserMapper">
+    <resultMap id="baseMap" type="comments">
+        <id property="userID" column="userID"/>
+        <result property="userName" column="userName"/>
+        <result property="password" column="password"/>
+        <result property="regAge" column="regAge"/>
+        <result property="regSex" column="regSex"/>
+        <result property="regEmail" column="regEmail"/>
+        <result property="regPhoto" column="regPhoto"/>
+        <result property="admin" column="admin"/>
+        <result property="regTime" column="regTime"/>
+        <result property="loginTime" column="loginTime"/>
+        <result property="login" column="login"/>
+    </resultMap>
+    <select id="findUserByUserName" parameterType="string" resultMap="baseMap">
+        select * from user where userName=#{username};
+    </select>
+    <insert id="insertUser" parameterType="user">
+        insert into user (userName, password, regAge, regSex, regEmail)
+        values ( #{userName}, #{password}, #{regAge}, #{regSex}, #{regEmail} )
+    </insert>
+    <select id="getPasswordByUserName" parameterType="string" resultType="string">
+        select password from user where userName=#{userName};
+    </select>
+    <update id="updateUserByUserName" parameterType="user">
+        update user
+        <set>
+            <if test="password != null">
+                password = #{password},
+            </if>
+            <if test="regAge != null">
+                regAge = #{regAge },
+            </if>
+            <if test="regSex != null">
+                regSex = #{regSex },
+            </if>
+            <if test="regEmail != null">
+                regEmail = #{regEmail },
+            </if>
+            <if test="regPhoto != null">
+                regPhoto = #{regPhoto },
+            </if>
+            <if test="admin != null">
+                admin = #{admin},
+            </if>
+            <if test="regTime != null">
+                regTime = #{regTime},
+            </if>
+            <if test="loginTime != null">
+                loginTime = #{loginTime},
+            </if>
+            <if test="login != null">
+                login = #{login},
+            </if>
+        </set>
+        where userName = #{userName}
+    </update>
+    <select id="findAllUser" resultMap="baseMap">
+        select * from user;
+    </select>
+    <delete id="deleteUserByUserName" parameterType="string">
+        delete from user where userName =#{userName};
+    </delete>
+</mapper>
