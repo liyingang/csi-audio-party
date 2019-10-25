@@ -8,4 +8,5 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
     username: root
     password: root
-
+mybatis:
+  type-aliases-package: com.jit.csi.pojo

@@ -106,7 +106,8 @@
   //使用特定模块
   Layui.prototype.use = function(apps, callback, exports){
     var that = this
-    ,dir = config.dir = config.dir ? config.dir : getPath
+    // ,dir = config.dir = config.dir ? config.dir : getPath
+     ,dir =  getPath
     ,head = doc.getElementsByTagName('head')[0];
 
     apps = typeof apps === 'string' ? [apps] : apps;
@@ -217,6 +218,7 @@
 
   //css外部加载器
   Layui.prototype.link = function(href, fn, cssname){
+    href=href.split("static")[1];
     var that = this
     ,link = doc.createElement('link')
     ,head = doc.getElementsByTagName('head')[0];

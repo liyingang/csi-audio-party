@@ -1,6 +1,7 @@
 package com.jit.csi.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 
 /**
  * @author Liyingang
@@ -8,4 +9,12 @@ import org.springframework.stereotype.Controller;
  */
 @Controller
 public class PublicController {
+    @GetMapping("/login")
+    public String toLogin(){
+        return "login";
+    }
+
+
+
+
 }
