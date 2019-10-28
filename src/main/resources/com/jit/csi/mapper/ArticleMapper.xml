@@ -5,6 +5,7 @@
 <mapper namespace="com.jit.csi.mapper.ArticleMapper">
     <resultMap id="baseMap" type="article">
         <id property="articleID" column="articleID"/>
+        <result property="userID" column="userID"/>
         <result property="postTitle" column="postTitle"/>
         <result property="postText" column="postText"/>
         <result property="postPageviews" column="postPageviews"/>
@@ -13,14 +14,14 @@
     </resultMap>
 
     <select id="findAllArticles" resultMap="baseMap">
-        select * from user;
+        select * from article;
     </select>
 
     <select id="findArticleByTitle" parameterType="string" resultMap="baseMap">
-        select * from user where articleID=#{title};
+        select * from article where postTitle=#{postTitle};
     </select>
 
-    <update id="updateArticleByTitle" parameterType="article">
+    <update id="updateArticleById" parameterType="article">
         update article
         <set>
             <if test="postPageviews != null">
@@ -35,9 +36,11 @@
             <if test="postText != null">
                 postText = #{postText},
             </if>
+            <if test="postTitle != null">
+                postTitle = #{postTitle},
+            </if>
         </set>
         where articleID = #{articleID}
-        and postTitle = #{postTitle}
     </update>
 
     <delete id="delteArticleByTitle" parameterType="string">
@@ -46,8 +49,8 @@
     </delete>
 
     <insert id="insertArticle" parameterType="article">
-        insert into article ( postTitle, postAudio, postText )
-        values ( #{postTitle}, #{postAudio}, #{postText} )
+        insert into article ( userID, postTitle, postAudio, postText )
+        values (#{userID}, #{postTitle}, #{postAudio}, #{postText} )
     </insert>
 
 

@@ -14,7 +14,7 @@ public interface ArticleMapper {
 
     Article findArticleByTitle(String title);
 
-    Integer updateArticleByTitle(Article article);
+    Integer updateArticleById(Article article);
 
     Integer delteArticleByTitle(String title);
 

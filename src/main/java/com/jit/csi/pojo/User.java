@@ -2,6 +2,7 @@ package com.jit.csi.pojo;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author Liyingang

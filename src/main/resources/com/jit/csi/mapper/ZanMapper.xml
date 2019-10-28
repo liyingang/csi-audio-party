@@ -3,14 +3,15 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.jit.csi.mapper.ZanMapper">
-    <resultMap id="baseMap" type="article">
+    <resultMap id="baseMap" type="zan">
         <id property="commentID" column="commentID"/>
         <result property="userID" column="userID"/>
     </resultMap>
-    <insert id="insertZan" parameterType="string">
+    <insert id="insertZan" parameterType="int">
         insert into zan values(#{cid},#{uid});
     </insert>
-    <delete id="deleteZanByUid" parameterType="string">
+    <delete id="deleteZanByUid" parameterType="int">
         delete from zan where userID=#{uid};
     </delete>
+
 </mapper>

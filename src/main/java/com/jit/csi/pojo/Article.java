@@ -9,13 +9,14 @@ import java.util.List;
  */
 public class Article {
     private Integer articleID;
+    private Integer userID;
     private String postTitle;
     private String postText;
     private Integer postPageviews;
     private String postAudio;
     private Date postTime;
 
-    List<Comments> commentsList;
+     private List<Comments> commentsList;
 
     public Integer getArticleID() {
         return articleID;
@@ -23,6 +24,14 @@ public class Article {
 
     public void setArticleID(Integer articleID) {
         this.articleID = articleID;
+    }
+
+    public Integer getUserID() {
+        return userID;
+    }
+
+    public void setUserID(Integer userID) {
+        this.userID = userID;
     }
 
     public String getPostTitle() {

@@ -23,7 +23,7 @@
     <select id="findAllCommentByTime" resultMap="baseMap">
         SELECT * FROM comments group by cmTime desc;
     </select>
-    <delete id="deleteCommentByID" parameterType="integer">
+    <delete id="deleteCommentByID" parameterType="int">
         delete from comments where commentID=#{id};
     </delete>
     <update id="updateCommentByID" parameterType="comments">

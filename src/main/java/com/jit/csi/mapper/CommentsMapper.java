@@ -16,7 +16,7 @@ public interface CommentsMapper {
 
     List<Comments> findPopularCommentByZan();
 
-    Comments deleteCommentByID(Integer id);
+    Integer deleteCommentByID(Integer id);
 
     Integer updateCommentByID(Comments comments);
 

@@ -4,9 +4,25 @@ server:
 spring:
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:mysql://localhost:3306/csi_audio
+    url: jdbc:mysql://localhost:3306/csi_audio?useSSL=true
     driver-class-name: com.mysql.jdbc.Driver
     username: root
     password: root
+
+# http:
+  #    encoding:
+  #      force: true
+  #      charset: utf-8
+  #      enabled: true
 mybatis:
   type-aliases-package: com.jit.csi.pojo
+
+logging:
+  level:
+    org:
+      springframework:
+        boot:
+          autoconfigure: error
+    root: info
+    com:
+      jit: debug

@@ -1,6 +1,7 @@
 package com.jit.csi.mapper;
 
 import org.apache.ibatis.annotations.Param;
+import org.omg.PortableInterceptor.INACTIVE;
 
 /**
  * @author Liyingang
@@ -8,10 +9,9 @@ import org.apache.ibatis.annotations.Param;
  */
 public interface ZanMapper {
 
-    Integer insertZan(@Param("cid") String cid, @Param("uid") String uid);
+    Integer insertZan(@Param("cid") Integer cid, @Param("uid") Integer uid);
 
-    Integer deleteZanByUid(String uid);
+    Integer deleteZanByUid(Integer uid);
 
-    Integer deleteZanByCid(String cid);
 
 }
