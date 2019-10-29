@@ -25,7 +25,21 @@ function subPassword(){
 		$("#tishi").html("当前密码不能为空");
 		return;
 	}
+	$.ajax({
+		type:"POST",
+		url:"changePass",
+		data:{"password":newPassword},
+		success:function (data) {
+			if(data){
+				window.parent.location.replace("login.html");
+			}else{
+				$.MsgBox.Alert("信息","密码修改错误");
+			}
+		},
+		error:function (data) {
+			$.MsgBox.Alert("信息",data);
+		}
+	})
 
-      window.parent.location.replace("login.html");
 
 }

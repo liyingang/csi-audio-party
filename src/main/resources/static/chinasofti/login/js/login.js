@@ -49,7 +49,6 @@ if(window !=top){
 	top.location.href=location.href;
 }
 function subReg(){
-	
 	var userName=$("#regusername").val();
 	var password=$("#regpassword").val();
 	var passwordCon=$("#regpasswordCon").val()
@@ -92,7 +91,7 @@ function subReg(){
 
  	$.ajax({
 		type:"POST",
-		url:"user/register",
+		url:"register",
 		data:{
 			"userName":userName,
 			"password":password,

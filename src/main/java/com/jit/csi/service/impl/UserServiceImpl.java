@@ -49,5 +49,14 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    public Integer changePass(User user){
+        return userMapper.updateUserByUserName(user);
+    }
+
+    @Override
+    public Integer updateUser(User user) {
+        return userMapper.updateUserByUserName(user);
+    }
+
 
 }

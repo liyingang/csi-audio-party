@@ -31,7 +31,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 			return true;
 		// 不符合条件的给出提示信息，并转发到登录页面
 		request.setAttribute("msg", "您还没有登录，请先登录！");
-		response.sendRedirect("http://localhost/login");
+		response.sendRedirect("http://localhost/login.html");
 		return false;
 	}
 	@Override

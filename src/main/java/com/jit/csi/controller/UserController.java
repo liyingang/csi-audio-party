@@ -2,13 +2,14 @@ package com.jit.csi.controller;
 
 import com.jit.csi.pojo.User;
 import com.jit.csi.service.UserService;
+import com.jit.csi.util.FileUtil;
 import org.apache.coyote.Request;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.util.ResourceUtils;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -18,7 +19,6 @@ import javax.servlet.http.HttpSession;
  * @version 1.0.0 2019-10-22 - 14:49
  */
 @Controller
-@RequestMapping("user")
 public class UserController {
     @Autowired
     UserService userService;
@@ -42,7 +42,39 @@ public class UserController {
         return userService.register(user);
     }
 
+    @PostMapping("changePass")
+    @ResponseBody
+    public Integer changPass(String password,HttpServletRequest request){
+        User user= (User) request.getSession().getAttribute("user");
+        User newUser=new User();
+        newUser.setUserName(user.getUserName());
+        newUser.setPassword(password);
+        return userService.changePass(newUser);
+    }
 
+    @GetMapping("user")
+    @ResponseBody
+    public User findUser(HttpServletRequest request){
+        return (User) request.getSession().getAttribute("user");
+    }
 
+    @PutMapping("user")
+    @ResponseBody
+    public Integer updateUser(User user){
+        return userService.updateUser(user);
+    }
+
+    @PostMapping("photo")
+    @ResponseBody
+    public Integer uploadPhoto(String file,HttpSession session){
+        User user= (User) session.getAttribute("user");
+        String name=this.getClass().getClassLoader().getResource("static").getPath()+"/photo/"+user.getUserID()+".jpg";
+        int flag=FileUtil.uploadPhoto(file,name);
+        if(flag==1){
+            user.setRegPhoto("/photo/"+user.getUserID()+".jpg");
+            return userService.updateUser(user);
+        }
+        return 0;
+    }
 
 }

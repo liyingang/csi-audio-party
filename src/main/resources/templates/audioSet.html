@@ -24,7 +24,7 @@
 	    	<div class="card-header">
 	             <h3 class="card-title">语音设置</h3>
 	        </div> 
-	        <input id="auSetUUID" type="hidden" value=""/>
+	        <input id="auSetUUID" type="hidden" th:value="${session.user.userID}"/>
 	        <div class="form-horizontal">
 				<div class="card-body">
 			             <div class="form-group" >

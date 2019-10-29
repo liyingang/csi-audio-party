@@ -1,18 +1,31 @@
 $(document).ready(function () {
-	
+	var regage=$("#regAge");
+	for(var i=14;i<100;i++){
+		regage.append("<option value='"+i+"'>"+i+"</option>");
+	}
+	$.ajax({
+		type:"GET",
+		url:"user",
+		success:function (data) {
+			if(data){
+				$("#regUUID").val(data.userID);
+				$("#userName").val(data.userName);
+				$("#regSex option[value='" + data.regSex + "']").attr("selected", true);
+				$("#regAge option[value='" + data.regAge + "']").attr("selected", true);
+				$("#regEmial").val(data.regEmail);
+				$("#oldUserName").val(data.userName);
+			}else{
+				alert(data);
+			}
+		},
+		error:function (data) {
+			alert(data);
+		}
+	})
 
 
-	         	var regage=$("#regAge");
-	         	
-	         	for(var i=14;i<100;i++){
-	             	regage.append("<option value='"+i+"'>"+i+"</option>");
-	             }
-	         	 $("#regUUID").val("0000000000");
-	             $("#userName").val("sjm");
-	    		 $("#regSex option[value='" + 0 + "']").attr("selected", true);
-	    		 $("#regAge option[value='" + 40 + "']").attr("selected", true);
-	    		 $("#regEmial").val("11@163.com");
-	    		 $("#oldUserName").val("sjm");
+
+
 
 
 });
@@ -24,7 +37,6 @@ function subReg(){
 	var regSex=$("#regSex").val();
 	var regAge=$("#regAge").val();
 	var regEmial=$("#regEmial").val();
-	var oldName=$("#oldUserName").val();
 	if(typeof (userName) == 'undefined' || userName.trim()=="" ){
 		$("#tishi").html("用户名不能为空");
 		return;
@@ -44,10 +56,29 @@ function subReg(){
 		$("#tishi").html("邮箱地址格式不正确");
 		return false;
 	}
+
+	$.ajax({
+		type:"PUT",
+		url:"user",
+		data:{
+			"userName":userName,
+			"regSex":regSex,
+			"regAge":regAge,
+			"regEmail":regEmial
+		},
+		success:function (data) {
+			if(data){
+				$.MsgBox.Alert("信息","修改成功");
+				window.parent.location.replace("login.html");
+			}else{
+				alert(data);
+			}
+		},
+		error:function (data) {
+			alert(data);
+		}
+	});
 	
 
-	
 
-     window.parent.location.replace("login.html");
-  
 }

@@ -1,7 +1,6 @@
 var file=""; 
 $(document).ready(function () {
 
-	   $("#finalImg").attr('src',"headPhoto/default/default.jpg"); 
 	
 });
 //弹出框水平垂直居中
@@ -110,7 +109,21 @@ $(document).ready(function () {
 			$.MsgBox.Alert("消息","剪裁区域的图片过大，上传头像大小不能超过2M！现在大小约为："+Math.floor((file.length/1000000))+"M");
 			return;
 		}
-
-		$.MsgBox.Alert("消息","上传成功");
+        $.ajax({
+            type:"POST",
+            url:"photo",
+            data:{"file":file},
+            success:function (data) {
+                if(data){
+                    alert("上传成功");
+                   window.location.reload();
+                }else{
+                    alert(data);
+                }
+            },
+            error:function (data) {
+                alert(data);
+            }
+        })
 
 	}

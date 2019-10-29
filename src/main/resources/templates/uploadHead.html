@@ -30,7 +30,7 @@
 				   <button  class="l-btn" onclick="subphoto()">提交头像</button>
 					<div style="height:10px"></div>
 					<div style="width: 150px;height: 150px;border: solid 1px #555;padding: 5px; margin: 0 auto;">
-					    <img id="finalImg" src="" width="100%">
+					    <img id="finalImg" th:src="${session.user.regPhoto}" width="100%">
 					</div>
 
 

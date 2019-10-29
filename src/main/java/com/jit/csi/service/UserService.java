@@ -15,4 +15,8 @@ public interface UserService {
     public User findUserByUserName(String userName);
 
     public User checkPassword(String username,String password);
+
+    public Integer changePass(User user);
+
+    public Integer updateUser(User user);
 }

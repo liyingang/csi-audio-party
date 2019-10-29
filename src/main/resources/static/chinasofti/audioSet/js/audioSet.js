@@ -1,20 +1,50 @@
 $(function(){
-  
+  $.ajax({
+	  type:"GET",
+	  url:"audio",
+	  success:function (data) {
+	  	if(data){
+			$("#auSetVoiPer option[value='" + data.auSetVoiPer + "']").attr("selected", true);
+			$("#auSetSpd option[value='" + data.auSetSpd + "']").attr("selected", true);
+			$("#auSetPit option[value='" + data.auSetPit + "']").attr("selected", true);
+			$("#auSetVol option[value='" + data.auSetVol + "']").attr("selected", true);
+		}else{
+	  		alert(data);
+		}
+	  },
+	  error:function (data) {
+		  alert(data);
+	  }
+  })
 
-	 $("#auSetUUID").val("0000000000000");
-	 $("#auSetVoiPer option[value='" + 0 + "']").attr("selected", true);
-	 $("#auSetSpd option[value='" + 5 + "']").attr("selected", true);
-	 $("#auSetPit option[value='" + 5 + "']").attr("selected", true);
-	 $("#auSetVol option[value='" + 5 + "']").attr("selected", true);
+
 	    		
 
 });
 
 function updateAudioSetUp(){
-	var auSetUUID=$("#auSetUUID").val();
-	var auSetVoiPer=$("#auSetVoiPer").val();
-	var auSetSpd=$("#auSetSpd").val();
-	var auSetPit=$("#auSetPit").val();
-	var auSetVol=$("#auSetVol").val();
+	var p={};
+	p.userID=$("#auSetUUID").val();
+	p.auSetVoiPer=$("#auSetVoiPer").val();
+	p.auSetSpd=$("#auSetSpd").val();
+	p.auSetPit=$("#auSetPit").val();
+	p.auSetVol=$("#auSetVol").val();
+
+	$.ajax({
+		type:'PUT',
+		url:"audio",
+		data:p,
+		success:function (data) {
+			if(data){
+				$.MsgBox.Alert("信息","提交成功");
+			}else{
+				$.MsgBox.Alert("信息","修改失败");
+
+			}
+		},
+		error:function (data) {
+			alert(data);
+		}
+	})
 	
 }
