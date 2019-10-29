@@ -14,12 +14,12 @@ function subLogin(){
 
     if(usrname.trim().length==0){
         $("#tishi").html("用户名不能为空");
-        return ;
+        return false;
     }
     var pwd = $pwd.val()||"";
     if(pwd.trim().length==0){
     	$("#tishi").html("密码不能为空!");
-        return ;
+        return false;
     }
     if($rememberPwd.is(':checked')){
     	$.localStorage.set(uk, usrname);
@@ -31,10 +31,10 @@ function subLogin(){
     	$.localStorage.remove(rk);
     }
     
-   
+
 	
 
-    window.location.replace("menu.html?menuUserName=sjm");
+    return true;
         		
         		//alert(JSON.stringify(json));
    
@@ -58,41 +58,64 @@ function subReg(){
 	var regEmial=$("#regEmial").val();
 	if(typeof (userName) == 'undefined' || userName.trim()=="" ){
 		$("#zucetishi").html("用户名不能为空");
-		return;
+		return false;
 	}
 	if(userName.trim().length>20){
 		$("#zucetishi").html("用户名不能大于20个字符");
-		return;
+		return false;
 	}
 	if(typeof (password) == 'undefined' || password.trim()==""  ){
 		$("#zucetishi").html("密码不能为空");
-		return;
+		return false;
 	}
 	if(password.trim().length!=6){
 		$("#zucetishi").html("密码必须为6位");
-		return;
+		return false;
 	}
 	if(typeof (passwordCon) == 'undefined' || passwordCon.trim()==""){
 		$("#zucetishi").html("确认密码不能为空");
-		return;
+		return false;
 	}
 	if(password.trim()!=passwordCon.trim()){
 		$("#zucetishi").html("密码与确认密码必须保持一致");
-		return;
+		return false;
 	}
 	if(typeof (regEmial) == 'undefined' || regEmial.trim()==""){
 		$("#zucetishi").html("邮箱地址不能为空");
-		return;
+		return false;
 	}
 
 	if(!(/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/.test(regEmial.trim()))){
 		$("#zucetishi").html("邮箱地址格式不正确");
-		return;
+		return false;
 	}
-	
- 	
-      $.MsgBox.Alert("消息", "注册成功，请重新登录！");
-      gotoLogin();
+
+ 	$.ajax({
+		type:"POST",
+		url:"user/register",
+		data:{
+			"userName":userName,
+			"password":password,
+			"regSex":regSex,
+			"regAge":regAge,
+			"regEmail":regEmial
+		},
+		success:function (data) {
+			if(data){
+				$.MsgBox.Alert("消息", "注册成功，请重新登录！");
+				gotoLogin();
+			}else{
+				$.MsgBox.Alert("消息", "注册失败，请重新注册！");
+			}
+		},
+		error:function (data) {
+			$.MsgBox.Alert("消息", data);
+		}
+
+	})
+
+
+
        
 }
 

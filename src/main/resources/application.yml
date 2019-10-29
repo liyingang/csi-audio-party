@@ -8,8 +8,10 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
     username: root
     password: root
+  thymeleaf:
+    cache: false
 
-# http:
+  # http:
   #    encoding:
   #      force: true
   #      charset: utf-8

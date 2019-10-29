@@ -21,17 +21,17 @@ public class LoginInterceptor implements HandlerInterceptor {
 		// 获取请求的URL
 		String url = request.getRequestURI();
 		// URL:除了登录请求外，其他的URL都进行拦截控制
-		if (url.contains("login")) {
+		if (url.contains("login")||url.contains("register")) {
 			return true;
 		}
 		// 获取Session
 		HttpSession session = request.getSession();
 		// 判断Session中是否有用户数据，如果有，则返回true,继续向下执行
-		if(session.getAttribute("User") != null)
+		if(session.getAttribute("user") != null)
 			return true;
 		// 不符合条件的给出提示信息，并转发到登录页面
-//		session.setAttribute("msg", "您还没有登录，请先登录！");
-		response.sendRedirect(request.getContextPath()+"/login.action");
+		request.setAttribute("msg", "您还没有登录，请先登录！");
+		response.sendRedirect("http://localhost/login");
 		return false;
 	}
 	@Override

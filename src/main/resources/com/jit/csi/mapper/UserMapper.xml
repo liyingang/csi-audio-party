@@ -20,8 +20,8 @@
         select * from user where userName=#{username};
     </select>
     <insert id="insertUser" parameterType="user">
-        insert into user (userName, password, regAge, regSex, regEmail)
-        values ( #{userName}, #{password}, #{regAge}, #{regSex}, #{regEmail} )
+        insert into user (userName, password, regAge, regSex, regEmail,regPhoto)
+        values ( #{userName}, #{password}, #{regAge}, #{regSex}, #{regEmail},#{regPhoto} )
     </insert>
     <select id="getPasswordByUserName" parameterType="string" resultType="string">
         select password from user where userName=#{userName};
