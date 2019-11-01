@@ -4,7 +4,7 @@ package com.jit.csi.pojo;
  * @author Liyingang
  * @version 1.0.0 2019-10-22 - 14:21
  */
-public class Zan {
+public class UcZan {
     private Integer commentID;
     private Integer userID;
 
@@ -26,7 +26,7 @@ public class Zan {
 
     @Override
     public String toString() {
-        return "Zan{" +
+        return "UcZan{" +
                 "commentID=" + commentID +
                 ", userID=" + userID +
                 '}';

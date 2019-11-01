@@ -28,6 +28,9 @@ public class PublicController {
     @GetMapping("/logout")
     public String toLogout(HttpSession session){
         if(session!=null){
+            User user= (User) session.getAttribute("user");
+            user.setLogin(0);
+            userService.updateUser(user);
             session.invalidate();
         }
         return "login";

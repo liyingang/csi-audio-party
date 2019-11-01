@@ -16,13 +16,30 @@
         <result property="loginTime" column="loginTime"/>
         <result property="login" column="login"/>
     </resultMap>
-    <select id="findUserByUserName" parameterType="string" resultMap="baseMap">
-        select * from user where userName=#{username};
+
+    <select id="findAllUser" resultMap="baseMap">
+        select * from user
     </select>
+
+
+    <select id="findUserByUserName" parameterType="string" resultType="user">
+        select * from user
+         where userName=#{username};
+    </select>
+
+
+    <select id="findUserByUserId" parameterType="int" resultMap="baseMap">
+        select * from user
+         where userID=#{userId};
+    </select>
+
+
+
     <insert id="insertUser" parameterType="user">
         insert into user (userName, password, regAge, regSex, regEmail,regPhoto)
         values ( #{userName}, #{password}, #{regAge}, #{regSex}, #{regEmail},#{regPhoto} )
     </insert>
+
     <select id="getPasswordByUserName" parameterType="string" resultType="string">
         select password from user where userName=#{userName};
     </select>
@@ -59,9 +76,7 @@
         </set>
         where userName = #{userName}
     </update>
-    <select id="findAllUser" resultMap="baseMap">
-        select * from user;
-    </select>
+
     <delete id="deleteUserByUserName" parameterType="string">
         delete from user where userName =#{userName};
     </delete>

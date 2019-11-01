@@ -11,14 +11,65 @@
         <result property="postPageviews" column="postPageviews"/>
         <result property="postAudio" column="postAudio"/>
         <result property="postTime" column="postTime"/>
+        <result property="postCom" column="postCom"/>
+        <result property="lastCom" column="lastCom"/>
+        <result property="zan" column="zan"/>
+        <association property="user" javaType="user">
+            <id property="userID" column="userID"/>
+            <result property="userName" column="userName"/>
+            <result property="password" column="password"/>
+            <result property="regAge" column="regAge"/>
+            <result property="regSex" column="regSex"/>
+            <result property="regEmail" column="regEmail"/>
+            <result property="regPhoto" column="regPhoto"/>
+            <result property="admin" column="admin"/>
+            <result property="regTime" column="regTime"/>
+            <result property="loginTime" column="loginTime"/>
+            <result property="login" column="login"/>
+        </association>
     </resultMap>
+    <resultMap id="cMap" type="comments">
+        <id property="commentID" column="commentID"/>
+        <result property="articleID" column="articleID"/>
+        <result property="cmText" column="cmText"/>
+        <result property="cmAudio" column="cmAudio"/>
+        <result property="cmTime" column="cmTime"/>
+        <result property="zan" column="zan"/>
+        <association property="user" javaType="user" column="user">
+            <id property="userID" column="userID"/>
+            <result property="userName" column="userName"/>
+            <result property="password" column="password"/>
+            <result property="regAge" column="regAge"/>
+            <result property="regSex" column="regSex"/>
+            <result property="regEmail" column="regEmail"/>
+            <result property="regPhoto" column="regPhoto"/>
+            <result property="admin" column="admin"/>
+            <result property="regTime" column="regTime"/>
+            <result property="loginTime" column="loginTime"/>
+            <result property="login" column="login"/>
+        </association>
+    </resultMap>
+    <select id="findhotComment" parameterType="int" resultMap="cMap">
+        SELECT * FROM comments c left join user using (userID) where c.articleID=#{articleID}
+        order by c.zan desc limit 5;
+    </select>
+    <select id="findAllCommentByTime" parameterType="int" resultMap="cMap">
+        SELECT * FROM comments c left join user using (userID) where c.articleID=#{articleID}
+        order by cmTime desc;
+    </select>
 
     <select id="findAllArticles" resultMap="baseMap">
-        select * from article;
+        select * from article left join user using (userID)
+        group by articleID;
     </select>
 
     <select id="findArticleByTitle" parameterType="string" resultMap="baseMap">
-        select * from article where postTitle=#{postTitle};
+        select * from article left join user using (userID)
+        where postTitle like  concat('%',#{postTitle},'%') group by articleID;
+    </select>
+    <select id="findArticleById" parameterType="int" resultMap="baseMap">
+        select * from article left join user using (userID)
+        where article.articleID=#{id} group by articleID;
     </select>
 
     <update id="updateArticleById" parameterType="article">
@@ -47,12 +98,22 @@
         delete from article
         where postTitle = #{postTitle}
     </delete>
+    <delete id="deleteByLogic"  parameterType = "java.util.List">
+        delete from article where articleID in
+        <foreach item="item" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+
+    </delete>
+
 
     <insert id="insertArticle" parameterType="article">
         insert into article ( userID, postTitle, postAudio, postText )
-        values (#{userID}, #{postTitle}, #{postAudio}, #{postText} )
+        values (#{userID}, #{postTitle}, #{postAudio}, #{postText} );
     </insert>
-
+    <select id="selectID" resultType="int" >
+        select last_insert_id();
+    </select>
 
 
 </mapper>

@@ -12,7 +12,8 @@
     </resultMap>
 
     <select id="findAudioConfigByUserID" parameterType="integer" resultMap="baseMap">
-        select * from audio_config where userID=#{uid};
+        select * from audio_config
+        where userID=#{uid};
     </select>
 
     <update id="updateAudioConfigByUserID" parameterType="audioConfig">

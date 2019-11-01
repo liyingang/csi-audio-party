@@ -1,5 +1,6 @@
 package com.jit.csi.util;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.sql.Timestamp;
 
@@ -12,5 +13,13 @@ public class DateUtils {
     public static Timestamp toSqlDate(){
         Date date=new Date();
         return new Timestamp(date.getTime());
+    }
+    public static Timestamp toSqlDate(Date date){
+        return new Timestamp(date.getTime());
+    }
+
+    public static String toLocalDate(Date date){
+        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return simpleDateFormat.format(date);
     }
 }

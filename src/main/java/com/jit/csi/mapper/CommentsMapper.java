@@ -20,5 +20,8 @@ public interface CommentsMapper {
 
     Integer updateCommentByID(Comments comments);
 
+    Integer selectID();
+
+    Integer deleteByLogic(List list);
 
 }

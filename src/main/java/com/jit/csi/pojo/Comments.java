@@ -9,10 +9,21 @@ import java.util.Date;
 public class Comments {
     private Integer commentID;
     private Integer articleID;
+    private Integer userID;
     private String cmText;
     private String cmAudio;
     private Date cmTime;
     private Integer zan;
+    private User user;
+    private Article article;
+
+    public Integer getUserID() {
+        return userID;
+    }
+
+    public void setUserID(Integer userID) {
+        this.userID = userID;
+    }
 
     public Integer getCommentID() {
         return commentID;
@@ -62,6 +73,22 @@ public class Comments {
         this.zan = zan;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Article getArticle() {
+        return article;
+    }
+
+    public void setArticle(Article article) {
+        this.article = article;
+    }
+
     @Override
     public String toString() {
         return "Comments{" +
@@ -71,6 +98,8 @@ public class Comments {
                 ", cmAudio='" + cmAudio + '\'' +
                 ", cmTime=" + cmTime +
                 ", zan=" + zan +
+                ", user=" + user +
+                ", article=" + article +
                 '}';
     }
 }

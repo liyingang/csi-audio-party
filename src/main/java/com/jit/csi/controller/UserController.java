@@ -29,7 +29,11 @@ public class UserController {
         if(user==null){
             request.setAttribute("msg","用户名或密码错误，请重试！");
             return "login.html";
-        }else{
+        }else if(user.getLogin()!=0){
+            request.setAttribute("msg","您已经在线");
+            return "login.html";
+        }
+        else{
             request.getSession().setAttribute("user",user);
             return"redirect:/menu.html";
         }
@@ -76,5 +80,8 @@ public class UserController {
         }
         return 0;
     }
+
+
+
 
 }

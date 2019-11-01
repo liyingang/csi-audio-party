@@ -3,15 +3,25 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.jit.csi.mapper.ZanMapper">
-    <resultMap id="baseMap" type="zan">
+    <resultMap id="ucMap" type="Uczan">
         <id property="commentID" column="commentID"/>
         <result property="userID" column="userID"/>
     </resultMap>
-    <insert id="insertZan" parameterType="int">
-        insert into zan values(#{cid},#{uid});
+    <resultMap id="uaMap" type="Uazan">
+        <id property="articleID" column="articleID"/>
+        <result property="userID" column="userID"/>
+    </resultMap>
+    <insert id="insertucZan" parameterType="int">
+        insert into u_c_zan values(#{cid},#{uid});
     </insert>
-    <delete id="deleteZanByUid" parameterType="int">
-        delete from zan where userID=#{uid};
+    <delete id="deleteucZanByUid" parameterType="int">
+        delete from u_c_zan where userID=#{uid};
+    </delete>
+    <insert id="insertuaZan" parameterType="int">
+        insert into u_a_zan values(#{aid},#{uid});
+    </insert>
+    <delete id="deleteuaZanByUid" parameterType="int">
+        delete from u_a_zan where userID=#{uid};
     </delete>
 
 </mapper>

@@ -17,16 +17,16 @@ class ArticleMapperTest {
     @Autowired
     ArticleMapper articleMapper;
 
-    @Test
-    void findAllArticles() {
-        System.out.println(articleMapper.findAllArticles());
-
-    }
-
-    @Test
-    void findArticleByTitle() {
-        System.out.println(articleMapper.findArticleByTitle("test1"));
-    }
+//    @Test
+//    void findAllArticles() {
+//        System.out.println(articleMapper.findAllArticles());
+//
+//    }
+//
+//    @Test
+//    void findArticleByTitle() {
+//        System.out.println(articleMapper.findArticleByTitle("test1"));
+//    }
 
     @Test
     void updateArticleByTitle() {
@@ -43,15 +43,15 @@ class ArticleMapperTest {
         articleMapper.delteArticleByTitle("test2");
     }
 
-    @Test
-    //@Transactional
-    void insertArticle() {
-        Article article=new Article();
-        article.setUserID(10008);
-        article.setPostTitle("test1");
-        article.setPostText("asfasklfjasfajalsdas");
-        article.setPostAudio("httsadasdsa");
-        articleMapper.insertArticle(article);
-        articleMapper.findArticleByTitle(article.getPostTitle());
-    }
+//    @Test
+//    //@Transactional
+//    void insertArticle() {
+//        Article article=new Article();
+//        article.setUserID(10008);
+//        article.setPostTitle("test1");
+//        article.setPostText("asfasklfjasfajalsdas");
+//        article.setPostAudio("httsadasdsa");
+//        articleMapper.insertArticle(article);
+//        articleMapper.findArticleByTitle(article.getPostTitle());
+//    }
 }

@@ -1,5 +1,7 @@
 package com.jit.csi.pojo;
 
+import com.jit.csi.util.DateUtils;
+
 import java.util.Date;
 import java.util.List;
 
@@ -14,9 +16,13 @@ public class Article {
     private String postText;
     private Integer postPageviews;
     private String postAudio;
-    private Date postTime;
-
-     private List<Comments> commentsList;
+    private String postTime;
+    private Integer postCom;
+    private Integer zan;
+    private String lastCom;
+    private User user;
+    private List<Comments> hotComments;
+    private List<Comments> newComments;
 
     public Integer getArticleID() {
         return articleID;
@@ -66,32 +72,77 @@ public class Article {
         this.postAudio = postAudio;
     }
 
-    public Date getPostTime() {
+    public String getPostTime() {
         return postTime;
     }
 
-    public void setPostTime(Date postTime) {
+    public void setPostTime(String postTime) {
         this.postTime = postTime;
     }
 
-    public List<Comments> getCommentsList() {
-        return commentsList;
+    public Integer getPostCom() {
+        return postCom;
     }
 
-    public void setCommentsList(List<Comments> commentsList) {
-        this.commentsList = commentsList;
+    public void setPostCom(Integer postCom) {
+        this.postCom = postCom;
+    }
+
+    public Integer getZan() {
+        return zan;
+    }
+
+    public void setZan(Integer zan) {
+        this.zan = zan;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public List<Comments> getHotComments() {
+        return hotComments;
+    }
+
+    public void setHotComments(List<Comments> hotComments) {
+        this.hotComments = hotComments;
+    }
+
+    public List<Comments> getNewComments() {
+        return newComments;
+    }
+
+    public void setNewComments(List<Comments> newComments) {
+        this.newComments = newComments;
+    }
+
+    public String getLastCom() {
+        return lastCom;
+    }
+
+    public void setLastCom(String lastCom) {
+        this.lastCom = lastCom;
     }
 
     @Override
     public String toString() {
         return "Article{" +
                 "articleID=" + articleID +
+                ", userID=" + userID +
                 ", postTitle='" + postTitle + '\'' +
                 ", postText='" + postText + '\'' +
                 ", postPageviews=" + postPageviews +
                 ", postAudio='" + postAudio + '\'' +
-                ", postTime=" + postTime +
-                ", commentsList=" + commentsList +
+                ", postTime='" + postTime + '\'' +
+                ", postCom=" + postCom +
+                ", zan=" + zan +
+                ", user=" + user +
+                ", hotComments=" + hotComments +
+                ", newComments=" + newComments +
                 '}';
     }
 }

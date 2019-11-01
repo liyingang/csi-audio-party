@@ -9,9 +9,14 @@ import org.omg.PortableInterceptor.INACTIVE;
  */
 public interface ZanMapper {
 
-    Integer insertZan(@Param("cid") Integer cid, @Param("uid") Integer uid);
+    Integer insertucZan(@Param("cid") Integer cid, @Param("uid") Integer uid);
 
-    Integer deleteZanByUid(Integer uid);
+    Integer deleteucZanByUid(Integer uid);
+
+
+    Integer insertuaZan(@Param("aid") Integer aid, @Param("uid") Integer uid);
+
+    Integer deleteuaZanByUid(Integer uid);
 
 
 }

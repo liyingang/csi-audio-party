@@ -1,6 +1,7 @@
 package com.jit.csi.mapper;
 
 import com.jit.csi.pojo.Article;
+import com.jit.csi.pojo.Comments;
 
 import java.util.List;
 
@@ -12,11 +13,20 @@ public interface ArticleMapper {
 
     List<Article> findAllArticles();
 
-    Article findArticleByTitle(String title);
+    List<Article> findArticleByTitle(String title);
 
     Integer updateArticleById(Article article);
 
     Integer delteArticleByTitle(String title);
 
     Integer insertArticle(Article article);
+
+    Integer selectID();
+
+    Integer deleteByLogic(List list);
+
+    Article findArticleById(Integer id);
+
+    List<Comments> findhotComment(Integer articleID);
+    List<Comments> findAllCommentByTime(Integer articleID);
 }

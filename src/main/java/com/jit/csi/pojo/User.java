@@ -1,6 +1,7 @@
 package com.jit.csi.pojo;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
@@ -17,11 +18,12 @@ public class User implements Serializable {
     private String regEmail;
     private String regPhoto;
     private String admin;
-    private Date regTime;
-    private Date loginTime;
+    private String regTime;
+    private String loginTime;
     private Integer login;
+    private AudioConfig audioConfig;
+    public User(){
 
-    public User() {
     }
 
     public User(String userName, String password, Integer regAge, String regSex, String regEmail) {
@@ -30,7 +32,7 @@ public class User implements Serializable {
         this.regAge = regAge;
         this.regSex = regSex;
         this.regEmail = regEmail;
-        this.regPhoto="/photo/default.jpg";
+        this.regPhoto="photo/default.jpg";
     }
 
     public Integer getUserID() {
@@ -97,19 +99,19 @@ public class User implements Serializable {
         this.admin = admin;
     }
 
-    public Date getRegTime() {
+    public String getRegTime() {
         return regTime;
     }
 
-    public void setRegTime(Date regTime) {
+    public void setRegTime(String regTime) {
         this.regTime = regTime;
     }
 
-    public Date getLoginTime() {
+    public String getLoginTime() {
         return loginTime;
     }
 
-    public void setLoginTime(Date loginTime) {
+    public void setLoginTime(String loginTime) {
         this.loginTime = loginTime;
     }
 
@@ -119,6 +121,14 @@ public class User implements Serializable {
 
     public void setLogin(Integer login) {
         this.login = login;
+    }
+
+    public AudioConfig getAudioConfig() {
+        return audioConfig;
+    }
+
+    public void setAudioConfig(AudioConfig audioConfig) {
+        this.audioConfig = audioConfig;
     }
 
     @Override
@@ -132,9 +142,10 @@ public class User implements Serializable {
                 ", regEmail='" + regEmail + '\'' +
                 ", regPhoto='" + regPhoto + '\'' +
                 ", admin='" + admin + '\'' +
-                ", regTime=" + regTime +
-                ", loginTime=" + loginTime +
+                ", regTime='" + regTime + '\'' +
+                ", loginTime='" + loginTime + '\'' +
                 ", login=" + login +
+                ", audioConfig=" + audioConfig +
                 '}';
     }
 }

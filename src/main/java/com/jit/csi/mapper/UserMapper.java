@@ -9,16 +9,17 @@ import java.util.List;
  * @version 1.0.0 2019-10-22 - 11:58
  */
 public interface UserMapper {
+    List<User> findAllUser();
 
     User findUserByUserName(String username);
+
+    User findUserByUserId(Integer userId);
 
     Integer insertUser(User user);
 
     String getPasswordByUserName(String username);
 
     Integer updateUserByUserName(User user);
-
-    List<User> findAllUser();
 
     Integer deleteUserByUserName(String username);
 }

@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @author Liyingang
  * @version 1.0.0 2019-10-22 - 14:44
@@ -38,6 +40,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User findUserByUserId(Integer userId) {
+        return userMapper.findUserByUserId(userId);
+    }
+
+    @Override
     public User checkPassword(String username,String password) {
         User user=userMapper.findUserByUserName(username);
         if(user==null){
@@ -56,6 +63,16 @@ public class UserServiceImpl implements UserService {
     @Override
     public Integer updateUser(User user) {
         return userMapper.updateUserByUserName(user);
+    }
+
+    @Override
+    public List<User> findAllUser() {
+        return userMapper.findAllUser();
+    }
+
+    @Override
+    public Integer deleteUserByUserName(String userName) {
+        return userMapper.deleteUserByUserName(userName);
     }
 
 

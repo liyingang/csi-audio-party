@@ -6,23 +6,42 @@
     <resultMap id="baseMap" type="comments">
         <id property="commentID" column="commentID"/>
         <result property="articleID" column="articleID"/>
+        <result property="userID" column="userID"/>
         <result property="cmText" column="cmText"/>
         <result property="cmAudio" column="cmAudio"/>
         <result property="cmTime" column="cmTime"/>
         <result property="zan" column="zan"/>
+        <association property="article" javaType="article" column="article" >
+            <id property="articleID" column="articleID"/>
+            <result property="userID" column="userID"/>
+            <result property="postTitle" column="postTitle"/>
+            <result property="postText" column="postText"/>
+            <result property="postPageviews" column="postPageviews"/>
+            <result property="postAudio" column="postAudio"/>
+            <result property="postTime" column="postTime"/>
+            <result property="postCom" column="postCom"/>
+            <result property="zan" column="zan"/>
+        </association>
+        <association property="user" javaType="user" column="user">
+            <id property="userID" column="userID"/>
+            <result property="userName" column="userName"/>
+            <result property="password" column="password"/>
+            <result property="regAge" column="regAge"/>
+            <result property="regSex" column="regSex"/>
+            <result property="regEmail" column="regEmail"/>
+            <result property="regPhoto" column="regPhoto"/>
+            <result property="admin" column="admin"/>
+            <result property="regTime" column="regTime"/>
+            <result property="loginTime" column="loginTime"/>
+            <result property="login" column="login"/>
+        </association>
     </resultMap>
 
     <insert id="insertComment" parameterType="comments" >
-        insert into comments ( articleID, cmAudio, cmText )
-        values ( #{articleID}, #{cmAudio}, #{cmText} )
+        insert into comments ( articleID,userID, cmAudio, cmText )
+        values ( #{articleID},#{userID}, #{cmAudio}, #{cmText} )
     </insert>
 
-    <select id="findPopularCommentByZan" resultMap="baseMap">
-        SELECT * FROM comments group by zan desc limit 5;
-    </select>
-    <select id="findAllCommentByTime" resultMap="baseMap">
-        SELECT * FROM comments group by cmTime desc;
-    </select>
     <delete id="deleteCommentByID" parameterType="int">
         delete from comments where commentID=#{id};
     </delete>
@@ -41,4 +60,16 @@
         </set>
         where commentID=#{commentID}
     </update>
+    <delete id="deleteByLogic"  parameterType = "java.util.List">
+        delete from comments where commentID in
+        <foreach item="item" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+
+    </delete>
+
+    <select id="selectID" resultType="int" >
+        select last_insert_id();
+    </select>
+
 </mapper>
