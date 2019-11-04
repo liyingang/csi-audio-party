@@ -28,28 +28,32 @@ function getPostList(pageIndex,everyPageDataCount,url){
 	  	$.ajax({
 			type:"GET",
 			url:url,
+			data:{"index":pageIndex},
 			success:function (data) {
 				if(data){
 					var body=$("#POST_LIST_TBODY_ID");
 					body.empty();
-						data.forEach(function (vo,i) {
-							body.append(` <tr bgcolor="#FFFFFF" ">
-                                        <td align="center" width="20">
-                                            <input name="DELETE_CHECK_NAME" type="checkbox" value="${vo.articleID}">
-                                        </td>
-                                        <td valign="center" align="center" width="30">${vo.postPageviews}</td>
-                                        <td valign="center" align="center" width="30">${vo.postCom}</td>
-                                        <td valign="center" align="center" width="110">
-                                            <a href="" onclick="post_detailed(${vo.articleID}); return false;" >${vo.postTitle}</a>
-                                        </td>
-                                        <td valign="center" align="center" width="110" >${vo.user.userName}</td>
-                                        <td valign="center" align="center" width="100" >${vo.postTime}</td>
-                                        <td valign="center" align="center" width="100" >${vo.lastCom==null?"":vo.lastCom}</td>
-                                    </tr>`);
-						});
-
-					}
+					data.list.forEach(function (vo,i) {
+						body.append(` <tr bgcolor="#FFFFFF" ">
+									<td align="center" width="20">
+										<input name="DELETE_CHECK_NAME" type="checkbox" value="${vo.articleID}">
+									</td>
+									<td valign="center" align="center" width="30">${vo.postPageviews}</td>
+									<td valign="center" align="center" width="30">${vo.postCom}</td>
+									<td valign="center" align="center" width="110">
+										<a href="" onclick="post_detailed(${vo.articleID}); return false;" >${vo.postTitle}</a>
+									</td>
+									<td valign="center" align="center" width="110" >${vo.user.userName}</td>
+									<td valign="center" align="center" width="100" >${vo.postTime}</td>
+									<td valign="center" align="center" width="100" >${vo.lastCom==null?"":vo.lastCom}</td>
+								</tr>`);
+					});
+					postPageIndex=data.pageNum;
+					postAllPage=data.pages;
+					$("#end1").text(postPageIndex+"/"+postAllPage+" 页");
+					$("#end2").text("共"+postAllPage+"页");
 				}
+			}
 
 		})
 	  		
@@ -118,14 +122,14 @@ function showPostlist(admin,postList,postAllNum,allPage,pageIndex){
 }
 
 function GOTO_POST_NEXT_PAGE(){
-
 	var searchNameVal=$("#SEARCH_POST_NAME_HIDDEN").val().trim();
-	getPostList(postPageIndex,everyPageDataCount,"/article"+searchNameVal);
+	if(postPageIndex+1>postAllPage)return;
+	getPostList(postPageIndex+1,everyPageDataCount,"/article/title/"+searchNameVal);
 }
 
 function GOTO_POST_TAIL_PAGE(){
 	var searchNameVal=$("#SEARCH_POST_NAME_HIDDEN").val().trim();
-	getPostList(postPageIndex,everyPageDataCount,"/article"+searchNameVal);
+	getPostList(postAllPage,everyPageDataCount,"/article/title/"+searchNameVal);
 }
 
 function GOTO_POST_PAGE(){
@@ -147,24 +151,28 @@ function GOTO_POST_PAGE(){
 		return;
 	}
 	var searchNameVal=$("#SEARCH_POST_NAME_HIDDEN").val().trim();
-	getPostList(jumpVal-1,everyPageDataCount,"/article"+searchNameVal);
+	getPostList(jumpVal,everyPageDataCount,"/article/title/"+searchNameVal);
 }
 
 
 function GOTO_POST_HOME_PAGE(){
 	var searchNameVal=$("#SEARCH_POST_NAME_HIDDEN").val().trim();
-	getPostList(0,everyPageDataCount,"/article"+searchNameVal);
+	getPostList(0,everyPageDataCount,"/article/title/"+searchNameVal);
 }
 
 function GOTO_POST_PREVIOUS_PAGE(){
 	var searchNameVal=$("#SEARCH_POST_NAME_HIDDEN").val().trim();
-	getPostList(postPageIndex-1,everyPageDataCount,"/article"+searchNameVal);
+	if(postPageIndex==0){
+		return;
+	}
+	getPostList(postPageIndex-1,everyPageDataCount,"/article/title/"+searchNameVal);
 	 
 }
 function searchByPostName(){
 	var searchNameVal=$("#SEARCH_POST_NAME").val().trim();
 	if(searchNameVal=="")searchNameVal="all";
 	getPostList(0,everyPageDataCount,"/article/title/"+searchNameVal);
+
 }
 
 function post_detailed(postUUID){

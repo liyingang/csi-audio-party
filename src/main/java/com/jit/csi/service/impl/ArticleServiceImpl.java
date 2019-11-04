@@ -1,5 +1,7 @@
 package com.jit.csi.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.jit.csi.audio.SaveAudio;
 import com.jit.csi.mapper.ArticleMapper;
 import com.jit.csi.mapper.AudioConfigMapper;
@@ -25,14 +27,22 @@ public class ArticleServiceImpl implements ArticleService {
     AudioConfigMapper audioConfigMapper;
 
     @Override
-    public List<Article> findAllArticles() {
-        return articleMapper.findAllArticles();
+    public PageInfo<Article> findAllArticles(Integer index,String userID) {
+        PageHelper.startPage(index,7);
+        List<Article> list=articleMapper.findAllArticles(userID);
+        PageInfo<Article> pageInfo=new PageInfo<>(list);
+        return pageInfo;
     }
 
     @Override
-    public List<Article> findArticleByTitle(String title) {
-        return articleMapper.findArticleByTitle(title);
+    public PageInfo<Article> findArticleByTitle(String title,Integer index,String userID) {
+        PageHelper.startPage(index,7);
+        List<Article> list=articleMapper.findArticleByTitle(title,userID);
+        PageInfo<Article> pageInfo=new PageInfo<>(list);
+        return pageInfo;
     }
+
+
 
     @Override
     public Integer updateArticleById(Article article) {

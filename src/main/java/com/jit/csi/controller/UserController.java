@@ -1,6 +1,8 @@
 package com.jit.csi.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.jit.csi.pojo.User;
+import com.jit.csi.service.ArticleService;
 import com.jit.csi.service.UserService;
 import com.jit.csi.util.FileUtil;
 import org.apache.coyote.Request;

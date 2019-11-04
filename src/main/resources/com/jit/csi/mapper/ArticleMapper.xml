@@ -58,18 +58,32 @@
         order by cmTime desc;
     </select>
 
-    <select id="findAllArticles" resultMap="baseMap">
+    <select id="findAllArticles" parameterType="int" resultMap="baseMap">
         select * from article left join user using (userID)
-        group by articleID;
+        <where>
+            <if test="userID!=null">
+                and userID=#{userID}
+            </if>
+        </where>
+        group by articleID
     </select>
 
     <select id="findArticleByTitle" parameterType="string" resultMap="baseMap">
         select * from article left join user using (userID)
-        where postTitle like  concat('%',#{postTitle},'%') group by articleID;
+        <where>
+            <if test="postTitle!=null">
+                and postTitle like  concat('%',#{postTitle},'%')
+            </if>
+            <if test="userID!=null">
+                and userID=#{userID}
+            </if>
+        </where>
+        group by articleID
     </select>
+
     <select id="findArticleById" parameterType="int" resultMap="baseMap">
         select * from article left join user using (userID)
-        where article.articleID=#{id} group by articleID;
+        where article.articleID=#{id} group by articleID
     </select>
 
     <update id="updateArticleById" parameterType="article">

@@ -19,6 +19,15 @@ spring:
 mybatis:
   type-aliases-package: com.jit.csi.pojo
 
+
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countSql
+
+
+
 logging:
   level:
     org:

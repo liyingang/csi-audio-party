@@ -1,5 +1,6 @@
 package com.jit.csi.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.jit.csi.pojo.Article;
 import com.jit.csi.pojo.User;
 import com.jit.csi.service.ArticleService;
@@ -21,11 +22,11 @@ public class ArticleController {
     ArticleService articleService;
 
     @GetMapping("/title/{id}")
-    public List<Article> findArticle(@PathVariable("id") String title, HttpSession session){
+    public PageInfo findArticle(@PathVariable("id") String title,Integer index,String userID){
         if("all".equals(title)){
-            return articleService.findAllArticles();
+            return articleService.findAllArticles(index,userID);
         }else{
-            return articleService.findArticleByTitle(title);
+            return articleService.findArticleByTitle(title,index,userID);
         }
     }
     @PostMapping("/article")

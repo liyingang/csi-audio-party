@@ -1,6 +1,7 @@
 var everyPageDataCount=7;
 var postPageIndex=0;
 var postAllPage=0;
+var userID=$("#userID").val();
 $(document).ready(function () {
 	KindEditor.options.cssData = 'body {font-family:微软雅黑;}',
 	editor = KindEditor.create('textarea[id="POST_ADD_DES"]', {
@@ -16,14 +17,45 @@ $(document).ready(function () {
 	            'italic', 'underline', 'strikethrough', 'lineheight', 'removeformat', '|', 'image',
 	             'table', 'hr', 'emoticons', ]
 	});
-	
-	
+
+
 	var searchNameVal=$("#SEARCH_POST_NAME_HIDDEN").val().trim();
-	getPostList(searchNameVal,0,everyPageDataCount,true,"/postbar/myPostController/getMyPostList");
-	
+	if(searchNameVal==="")searchNameVal="all";
+	getPostList(0,everyPageDataCount,"/article/title/"+searchNameVal);
 });
-function getPostList(postTitle,pageIndex,everyPageDataCount,SynOrAsyn,url){
-	
+function getPostList(pageIndex,everyPageDataCount,url){
+	$("#SEARCH_POST_NAME_HIDDEN").val(url.split("/article/title/")[1].trim());
+	$.ajax({
+		type:"GET",
+		url:url,
+		data:{"index":pageIndex,"userID":userID},
+		success:function (data) {
+			if(data){
+				var body=$("#POST_LIST_TBODY_ID");
+				body.empty();
+				data.list.forEach(function (vo,i) {
+					body.append(` <tr bgcolor="#FFFFFF" ">
+									<td align="center" width="20">
+										<input name="DELETE_CHECK_NAME" type="checkbox" value="${vo.articleID}">
+									</td>
+									<td valign="center" align="center" width="30">${vo.postPageviews}</td>
+									<td valign="center" align="center" width="30">${vo.postCom}</td>
+									<td valign="center" align="center" width="110">
+										<a href="" onclick="post_detailed(${vo.articleID}); return false;" >${vo.postTitle}</a>
+									</td>
+									<td valign="center" align="center" width="110" >${vo.user.userName}</td>
+									<td valign="center" align="center" width="100" >${vo.postTime}</td>
+									<td valign="center" align="center" width="100" >${vo.lastCom==null?"":vo.lastCom}</td>
+								</tr>`);
+				});
+				postPageIndex=data.pageNum;
+				postAllPage=data.pages;
+				$("#end1").text(postPageIndex+"/"+postAllPage+" 页");
+				$("#end2").text("共"+postAllPage+"页");
+			}
+		}
+
+	})
 }
 
 function returnPostList(){
@@ -57,9 +89,23 @@ function addPostCheck(){
 		$("#tishi").html("文章内容不能为空");
 		return;
 	}
+	$.ajax({
+		type:"POST",
+		url:"/article/article",
+		data:{"title":title,"text":text},
+		async:false,
+		success:function (data) {
+			if(data){
+				alert("成功插入！");
+				returnPostList();
+				var searchNameVal=$("#SEARCH_POST_NAME_HIDDEN").val().trim();
+				getPostList(postPageIndex,everyPageDataCount,"/article/title/"+searchNameVal);
+			}else{
+				alert("插入失败！");
 
-
-	   returnPostList();
+			}
+		}
+	})
 	    		
 
 }
@@ -69,14 +115,14 @@ function showPostlist(postList,postAllNum,allPage,pageIndex){
 }
 
 function GOTO_POST_NEXT_PAGE(){
-
 	var searchNameVal=$("#SEARCH_POST_NAME_HIDDEN").val().trim();
-	getPostList(searchNameVal,postPageIndex+1,everyPageDataCount,true,"/postbar/myPostController/getMyPostList");
+	if(postPageIndex+1>postAllPage)return;
+	getPostList(postPageIndex+1,everyPageDataCount,"/article/title/"+searchNameVal);
 }
 
 function GOTO_POST_TAIL_PAGE(){
 	var searchNameVal=$("#SEARCH_POST_NAME_HIDDEN").val().trim();
-	getPostList(searchNameVal,postAllPage-1,everyPageDataCount,true,"/postbar/myPostController/getMyPostList");
+	getPostList(postAllPage,everyPageDataCount,"/article/title/"+searchNameVal);
 }
 
 function GOTO_POST_PAGE(){
@@ -98,28 +144,38 @@ function GOTO_POST_PAGE(){
 		return;
 	}
 	var searchNameVal=$("#SEARCH_POST_NAME_HIDDEN").val().trim();
-	getPostList(searchNameVal,jumpVal-1,everyPageDataCount,true,"/postbar/myPostController/getMyPostList");
+	getPostList(jumpVal,everyPageDataCount,"/article/title/"+searchNameVal);
 }
 
 
 function GOTO_POST_HOME_PAGE(){
 	var searchNameVal=$("#SEARCH_POST_NAME_HIDDEN").val().trim();
-	getPostList(searchNameVal,0,everyPageDataCount,true,"/postbar/myPostController/getMyPostList");
+	getPostList(0,everyPageDataCount,"/article/title/"+searchNameVal);
 }
 
 function GOTO_POST_PREVIOUS_PAGE(){
 	var searchNameVal=$("#SEARCH_POST_NAME_HIDDEN").val().trim();
-	getPostList(searchNameVal,postPageIndex-1,everyPageDataCount,true,"/postbar/myPostController/getMyPostList");
-	 
+	if(postPageIndex==0){
+		return;
+	}
+	getPostList(postPageIndex-1,everyPageDataCount,"/article/title/"+searchNameVal);
+
 }
 function searchByPostName(){
 	var searchNameVal=$("#SEARCH_POST_NAME").val().trim();
-	getPostList(searchNameVal,0,everyPageDataCount,true,"/postbar/myPostController/getMyPostList");
+	if(searchNameVal=="")searchNameVal="all";
+	getPostList(0,everyPageDataCount,"/article/title/"+searchNameVal);
+
+
 }
 
 function post_detailed(postUUID){
-
-	window.location.replace("comment.html?page=myPost&postid="+postUUID);
+	$.ajax({
+		type:"PUT",
+		url:"article/addView",
+		data:{"id":postUUID}
+	})
+	window.location.replace("comment.html?postId="+postUUID);
 
 }
 
@@ -132,7 +188,17 @@ function DELETE_POST(){
     	$.MsgBox.Alert("消息","请先选择需要删除的文章");
     	return;
     }
-    
+	$.ajax({
+		type:"DELETE",
+		url:"article/article",
+		data: {"array":chk_value},
+		success:function (data) {
+			if(data){
+				alert("删除成功");
+				window.location.reload();
+			}
+		}
+	});
 }
 
 

@@ -2,6 +2,7 @@ package com.jit.csi.mapper;
 
 import com.jit.csi.pojo.Article;
 import com.jit.csi.pojo.Comments;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -11,9 +12,11 @@ import java.util.List;
  */
 public interface ArticleMapper {
 
-    List<Article> findAllArticles();
+    List<Article> findAllArticles(String userID);
 
-    List<Article> findArticleByTitle(String title);
+    List<Article> findArticleByTitle(@Param("postTitle") String title,
+                                     @Param("userID")String userID);
+
 
     Integer updateArticleById(Article article);
 
@@ -29,4 +32,7 @@ public interface ArticleMapper {
 
     List<Comments> findhotComment(Integer articleID);
     List<Comments> findAllCommentByTime(Integer articleID);
+
+
+
 }

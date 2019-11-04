@@ -1,6 +1,8 @@
 package com.jit.csi.service;
 
+import com.github.pagehelper.PageInfo;
 import com.jit.csi.pojo.Article;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -9,9 +11,9 @@ import java.util.List;
  * @version 1.0.0 2019-10-22 - 14:45
  */
 public interface ArticleService {
-    List<Article> findAllArticles();
+    PageInfo<Article> findAllArticles(Integer index,String userID);
 
-    List<Article> findArticleByTitle(String title);
+    PageInfo<Article> findArticleByTitle(String title,Integer index,String userID);
 
     Integer updateArticleById(Article article);
 
